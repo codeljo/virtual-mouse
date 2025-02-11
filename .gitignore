@@ -1,0 +1,4 @@
+.vscode/
+build/app
+build/obj/*.o
+.DS_Store
