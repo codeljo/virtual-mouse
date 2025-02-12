@@ -100,11 +100,8 @@ private:
 /*
 int main() {
     VirtualMouse mouse;
-
-    // Move the mouse
-    mouse.move(10, 10);    // Move right and down
-    mouse.click(BTN_LEFT); // Left click
-
+    mouse.move(10, 10);
+    mouse.click(BTN_LEFT)
     return 0;
 }
 */

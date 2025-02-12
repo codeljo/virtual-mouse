@@ -1,10 +1,13 @@
 #include <iostream>
+#include "MouseVirtual.h"
 #include "PairManager.h"
 #include "signals.h"
 
 int main () {
 
 	signal_handler_init();
+	
+	MouseVirtual mouse;
 
 	PairManager manager;
 	manager.loop();

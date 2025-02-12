@@ -1,24 +1,23 @@
 #include "signals.h"
 
-struct sigaction act;
+struct sigaction sa;
 
 void signal_handler_init() {
-	memset(&act, 0, sizeof(act));
-	act.sa_sigaction = signal_handler;
-	act.sa_flags = SA_SIGINFO;
-	sigaction(SIGHUP, &act, NULL);  // (SIGHUP  1)  controlling parent/terminal exits
-	sigaction(SIGINT, &act, NULL);  // (SIGINT  2)  ctrl-c
-	sigaction(SIGTERM, &act, NULL); // (SIGTERM 15) normal kill command
 	//printf("%s\n", __func__);
+	sa.sa_handler = signal_handler;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sigaction(SIGHUP, &sa, NULL);  // (SIGHUP  1)  controlling parent/terminal exits
+	sigaction(SIGINT, &sa, NULL);  // (SIGINT  2)  ctrl-c
+	sigaction(SIGTERM, &sa, NULL); // (SIGTERM 15) normal kill command
 }
 
-void signal_handler(int signum, __attribute__((unused)) siginfo_t *info, __attribute__((unused)) void *ptr) {
-	//printf("%s - received signal %d\n", __func__, signum);
-	//printf("%s - from process %lu\n", __func__, (unsigned long)info->si_pid);
+void signal_handler(int signal_num) {
+	//printf("%s - received signal %d\n", __func__, signal_num);
 
 	bool isIgnored = false;
 
-	switch (signum) {
+	switch (signal_num) {
 		case SIGHUP:
 			// ignore, continue running
 			isIgnored = true;
@@ -33,7 +32,7 @@ void signal_handler(int signum, __attribute__((unused)) siginfo_t *info, __attri
 			break;
 	}
 
-	// TODO: do cleanup here - freeing memory, closing files, etc
+	// cleanup here - freeing memory, closing files, etc
 
-	if (!isIgnored) { exit(signum); }
+	if (!isIgnored) { exit(signal_num); }
 }

@@ -13,7 +13,7 @@ extern "C" {
 #endif
 
 void signal_handler_init();
-void signal_handler(int signum, siginfo_t *info, void *ptr);
+void signal_handler(int signal_num);
 
 #ifdef __cplusplus
 }
