@@ -1,4 +1,11 @@
+#
+# git status -u --ignored
+#
+
+# ignore
 .vscode/
-build/app
+android/libs/
+android/obj/
 build/obj/*.o
+build/app
 .DS_Store
