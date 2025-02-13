@@ -7,5 +7,5 @@
 android/libs/
 android/obj/
 build/obj/*.o
-build/app
+build/virtual-mouse
 .DS_Store

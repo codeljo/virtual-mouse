@@ -13,7 +13,7 @@ CXX_SOURCES = $(wildcard $(SRC_DIR)/*.cpp)
 C_OBJECTS = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(C_SOURCES))
 CXX_OBJECTS = $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(CXX_SOURCES))
 OBJECTS = $(C_OBJECTS) $(CXX_OBJECTS)
-EXECUTABLE = $(BUILD_DIR)/app
+EXECUTABLE = $(BUILD_DIR)/virtual-mouse
 
 # Targets
 all: $(EXECUTABLE)
@@ -30,6 +30,6 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 clean:
-	rm $(OBJ_DIR)/*.o $(BUILD_DIR)/app
+	rm $(OBJ_DIR)/*.o $(BUILD_DIR)/virtual-mouse
 
 .PHONY: all clean
