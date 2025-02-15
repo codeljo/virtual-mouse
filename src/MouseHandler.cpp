@@ -13,22 +13,10 @@ MouseHandler::MouseHandler(Device& mouse, SyncQueue<Button>& queue) : mouse_(mou
 
 MouseHandler::~MouseHandler() {
 	DEBUG("~MouseHandler() (deconstructor)");
-	close_fd();
+	fd_close();
 }
 
-void MouseHandler::start() {
-	future_ = std::async(std::launch::async, &MouseHandler::doLoop, this);
-}
-
-void MouseHandler::stop() {
-	isStopRequested_ = true;
-}
-
-bool MouseHandler::isRunning() const {
-	return (this->future_.wait_for(std::chrono::milliseconds(0)) != std::future_status::ready);
-}
-
-int MouseHandler::open_fd() {
+int MouseHandler::fd_open() {
 	fd_ = open(mouse_.getPathPtr(), O_RDWR);
 	if (fd_ == -1) {
 		DEBUG("MouseHandler %s - failed to open device: %s (%s)\n", __func__, mouse.getPathPtr(), strerror(errno));
@@ -36,15 +24,15 @@ int MouseHandler::open_fd() {
 	return fd_;
 }
 
-void MouseHandler::close_fd() {
+void MouseHandler::fd_close() {
 	if (fd_ != -1) {
 		if (close(fd_) == 0) { fd_ = -1; }
 	}
 }
 
-int MouseHandler::doLoop() {
+int MouseHandler::run() {
 
-	if (open_fd() == -1) { return -1; }
+	if (fd_open() == -1) { return -1; }
 
 	DEBUG("MouseHandler %s - reading from: %s (%s)\n", __func__, mouse.getPathPtr(), mouse.getNamePtr());
 
@@ -112,7 +100,7 @@ int MouseHandler::doLoop() {
 		std::this_thread::sleep_for(std::chrono::milliseconds(50));
 	}
 
-	close_fd();
+	fd_close();
 	return 0;
 }
 

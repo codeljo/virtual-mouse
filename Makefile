@@ -30,6 +30,6 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 clean:
-	rm $(OBJ_DIR)/*.o $(BUILD_DIR)/virtual-mouse
+	rm -f $(OBJ_DIR)/*.o $(BUILD_DIR)/virtual-mouse
 
 .PHONY: all clean

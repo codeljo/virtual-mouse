@@ -14,23 +14,19 @@
 #include "Button.h"
 #include "Device.h"
 #include "SyncQueue.h"
+#include "ThreadedObject.h"
 
-class RemoteHandler {
+class RemoteHandler : public ThreadedObject {
 public:
 	RemoteHandler(Device& remote, SyncQueue<Button>& queue);
 	~RemoteHandler();
-	void start();
-	void stop();
-	bool isRunning() const;
+	int run() override;
 private:
-	int open_fd();
-	void close_fd();
-	int doLoop();
+	int fd_open();
+	void fd_close();
 private:
 	Device remote_;
 	SyncQueue<Button>& queue_;
-	std::future<int> future_;
-	std::atomic<bool> isStopRequested_ = false;
 	int fd_ {-1};
 private:
 	static constexpr int READ_EVENTS_MAX = 64;

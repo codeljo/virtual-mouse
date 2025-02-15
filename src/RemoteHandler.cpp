@@ -15,22 +15,10 @@ RemoteHandler::RemoteHandler(Device& remote, SyncQueue<Button>& queue) : remote_
 
 RemoteHandler::~RemoteHandler() {
 	DEBUG("~RemoteHandler() (deconstructor)\n");
-	close_fd();
+	fd_close();
 }
 
-void RemoteHandler::start() {
-	future_ = std::async(std::launch::async, &RemoteHandler::doLoop, this);
-}
-
-void RemoteHandler::stop() {
-	isStopRequested_ = true;
-}
-
-bool RemoteHandler::isRunning() const {
-	return (this->future_.wait_for(std::chrono::milliseconds(0)) != std::future_status::ready);
-}
-
-int RemoteHandler::open_fd() {
+int RemoteHandler::fd_open() {
 	fd_ = open(remote_.getPathPtr(), O_RDONLY);
 	if (fd_ == -1) {
 		DEBUG("RemoteHandler %s - failed to open device: %s (%s)\n", __func__, remote.getPathPtr(), strerror(errno));
@@ -38,16 +26,16 @@ int RemoteHandler::open_fd() {
 	return fd_;
 }
 
-void RemoteHandler::close_fd() {
+void RemoteHandler::fd_close() {
 	if (fd_ != -1) {
 		ioctl(fd_, EVIOCGRAB, 0);
 		if (close(fd_) == 0) { fd_ = -1; }
 	}
 }
 
-int RemoteHandler::doLoop() {
+int RemoteHandler::run() {
 
-	if (open_fd() == -1) { return -1; }
+	if (fd_open() == -1) { return -1; }
 
 	DEBUG("RemoteHandler %s - reading from: %s (%s)\n", __func__, remote.getPathPtr(), remote.getNamePtr());
 
@@ -122,6 +110,6 @@ int RemoteHandler::doLoop() {
 		}
 	}
 
-	close_fd();
+	fd_close();
 	return 0;
 }
