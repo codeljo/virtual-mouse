@@ -4,10 +4,10 @@
 
 #include <future>
 
-template <typename T>
+template <class T>
 class ThreadedObject {
 public:
-    virtual int run() = 0;
+    virtual T run() = 0;
     virtual void start() {
         future_ = std::async(std::launch::async, &ThreadedObject::run, this);
     }
