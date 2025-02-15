@@ -4,6 +4,7 @@
 
 #include <future>
 
+template <typename T>
 class ThreadedObject {
 public:
     virtual int run() = 0;
@@ -13,8 +14,8 @@ public:
 	virtual void stop() {
         isStopRequested_ = true;
     }
-    virtual void join() {
-        future_.get();
+    virtual T join() {
+        return future_.get();
     }
     virtual bool isRunning() const {
         return future_.wait_for(std::chrono::seconds(0)) == std::future_status::timeout;
@@ -23,7 +24,7 @@ public:
         stop();
     }
 protected:
-    std::future<int> future_;
+    std::future<T> future_;
 	std::atomic<bool> isStopRequested_ {false};
 };
 

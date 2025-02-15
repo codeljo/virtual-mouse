@@ -16,7 +16,7 @@
 #include "SyncQueue.h"
 #include "ThreadedObject.h"
 
-class RemoteHandler : public ThreadedObject {
+class RemoteHandler : public ThreadedObject<int> {
 public:
 	RemoteHandler(Device& remote, SyncQueue<Button>& queue);
 	~RemoteHandler();

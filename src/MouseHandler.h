@@ -16,7 +16,7 @@
 #include "SyncQueue.h"
 #include "ThreadedObject.h"
 
-class MouseHandler : public ThreadedObject {
+class MouseHandler : public ThreadedObject<int> {
 public:
 	MouseHandler(Device& mouse, SyncQueue<Button>& queue);
 	~MouseHandler();
