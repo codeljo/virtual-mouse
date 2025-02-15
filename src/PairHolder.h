@@ -28,8 +28,6 @@ public:
 	Device getMouse();
 	friend std::ostream& operator<<(std::ostream& os, const PairHolder& obj);
 private:
-	int doLoop();
-private:
 	Device remote_;
 	Device mouse_;
 	RemoteHandler remoteHandler_;
