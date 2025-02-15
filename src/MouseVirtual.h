@@ -1,3 +1,7 @@
+#pragma once
+#ifndef MOUSE_VIRTUAL_H
+#define MOUSE_VIRTUAL_H
+
 #include <iostream>
 #include <fcntl.h>
 #include <unistd.h>
@@ -102,11 +106,4 @@ public:
 
 };
 
-/*
-int main() {
-    VirtualMouse mouse;
-    mouse.move(10, 10);
-    mouse.click(BTN_LEFT)
-    return 0;
-}
-*/
+#endif  /* MOUSE_VIRTUAL_H */
