@@ -6,10 +6,24 @@
 #include <errno.h>
 
 class MouseVirtual {
+private:
+	const char* name_;
+    int fd_;
 public:
-	MouseVirtual() {
+	MouseVirtual(const char* name="Virtual Mouse") : name_(name) {
+		init();
+	}
+
+    ~MouseVirtual() {
+        if (fd_ >= 0) {
+            ioctl(fd_, UI_DEV_DESTROY);
+            close(fd_);
+        }
+    }
+
+	void init() {
 		
-        // open uinput device
+		// open uinput device
         fd_ = open("/dev/uinput", O_WRONLY | O_NONBLOCK);
         if (fd_ < 0) {
             perror("Failed to open /dev/uinput");
@@ -27,7 +41,7 @@ public:
         // create the device
         struct uinput_user_dev uidev;
         memset(&uidev, 0, sizeof(uidev));
-        strncpy(uidev.name, "Virtual Mouse", UINPUT_MAX_NAME_SIZE);
+		strncpy(uidev.name, name_, UINPUT_MAX_NAME_SIZE-1);
         uidev.id.bustype = BUS_USB;
         uidev.id.vendor = 0x1234;
         uidev.id.product = 0x5678;
@@ -40,14 +54,7 @@ public:
         if (ioctl(fd_, UI_DEV_CREATE) < 0) {
             perror("Failed to create uinput device");
         }
-    }
-
-    ~MouseVirtual() {
-        if (fd_ >= 0) {
-            ioctl(fd_, UI_DEV_DESTROY);
-            close(fd_);
-        }
-    }
+	}
 
     void move(int x, int y) {
         struct input_event ev;
@@ -93,8 +100,6 @@ public:
         write(fd_, &ev, sizeof(ev));
     }
 
-private:
-    int fd_;
 };
 
 /*
