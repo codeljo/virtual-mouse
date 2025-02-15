@@ -20,9 +20,9 @@ class MouseHandler : public ThreadedObject<int> {
 public:
 	MouseHandler(Device& mouse, SyncQueue<Button>& queue);
 	~MouseHandler();
-	int run() override;
 private:
 	enum class KeyEventType { DOWN, UP, DOWNUP };
+	int run() override;
 	int fd_open();
 	void fd_close();
 	bool doMouseMove(int fd, int x, int y);
@@ -32,7 +32,6 @@ private:
 	Device mouse_;
 	SyncQueue<Button>& queue_;
 	int fd_ {-1};
-private:
 	static constexpr double SPEED_MAX = 5.0f;
 	static constexpr double SPEED_ACCEL = 1.01f;
 	static constexpr int MOVE_COUNT_MAX = 512;
