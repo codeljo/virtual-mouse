@@ -21,7 +21,7 @@ RemoteHandler::~RemoteHandler() {
 int RemoteHandler::fd_open() {
 	fd_ = open(remote_.getPathPtr(), O_RDONLY);
 	if (fd_ == -1) {
-		DEBUG("RemoteHandler %s - failed to open device: %s (%s)\n", __func__, remote.getPathPtr(), strerror(errno));
+		DEBUG("RemoteHandler %s - failed to open device: %s (%s)\n", __func__, remote_.getPathPtr(), strerror(errno));
 	}
 	return fd_;
 }
@@ -37,7 +37,7 @@ int RemoteHandler::run() {
 
 	if (fd_open() == -1) { return -1; }
 
-	DEBUG("RemoteHandler %s - reading from: %s (%s)\n", __func__, remote.getPathPtr(), remote.getNamePtr());
+	DEBUG("RemoteHandler %s - reading from: %s (%s)\n", __func__, remote_.getPathPtr(), remote_.getNamePtr());
 
 	bool isMouse = false;
 
@@ -79,7 +79,7 @@ int RemoteHandler::run() {
 								if (ioctl(fd_, EVIOCGRAB, !isMouse) != -1) { isMouse = !isMouse; }
 								if (isMouse) { queue_.push(Button(255)); }
 							}
-							DEBUG("RemoteHandler %s - KEY_PLAYPAUSE diff:%lf isMouse:%s\n", __func__, diff, (isMouse ? "true" : "false"));
+							DEBUG("RemoteHandler %s - KEY_PLAYPAUSE diff:%li isMouse:%s\n", __func__, diff, (isMouse ? "true" : "false"));
 						} else if (value == 1) {
 							button.setState(Button::State::DOWN);
 						}

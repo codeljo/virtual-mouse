@@ -7,11 +7,11 @@
 #define DEBUG(format, args...) ((void)0)
 
 PairHolder::PairHolder(Device& remote, Device& mouse) : remote_(remote), mouse_(mouse), remoteHandler_(remote, queue_), mouseHandler_(mouse, queue_) { 
-	DEBUG("PairHandler() (constructor)");
+	DEBUG("PairHandler() (constructor)\n");
 }
 
 PairHolder::~PairHolder() {
-	DEBUG("~PairHandler() (deconstructor)");
+	DEBUG("~PairHandler() (deconstructor)\n");
 	stop();
 }
 

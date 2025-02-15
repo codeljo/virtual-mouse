@@ -7,19 +7,19 @@
 #define DEBUG(format, args...) ((void)0)
 
 MouseHandler::MouseHandler(Device& mouse, SyncQueue<Button>& queue) : mouse_(mouse), queue_(queue) { 
-	DEBUG("MouseHandler() (constructor)");
+	DEBUG("MouseHandler() (constructor)\n");
 	start();
 }
 
 MouseHandler::~MouseHandler() {
-	DEBUG("~MouseHandler() (deconstructor)");
+	DEBUG("~MouseHandler() (deconstructor)\n");
 	fd_close();
 }
 
 int MouseHandler::fd_open() {
 	fd_ = open(mouse_.getPathPtr(), O_RDWR);
 	if (fd_ == -1) {
-		DEBUG("MouseHandler %s - failed to open device: %s (%s)\n", __func__, mouse.getPathPtr(), strerror(errno));
+		DEBUG("MouseHandler %s - failed to open device: %s (%s)\n", __func__, mouse_.getPathPtr(), strerror(errno));
 	}
 	return fd_;
 }
@@ -34,7 +34,7 @@ int MouseHandler::run() {
 
 	if (fd_open() == -1) { return -1; }
 
-	DEBUG("MouseHandler %s - reading from: %s (%s)\n", __func__, mouse.getPathPtr(), mouse.getNamePtr());
+	DEBUG("MouseHandler %s - reading from: %s (%s)\n", __func__, mouse_.getPathPtr(), mouse_.getNamePtr());
 
 	while (isStopRequested_ == false) {
 
