@@ -9,7 +9,7 @@ private:
     const std::string name_;
 	const std::string path_;
 public:
-	Device(std::string name, std::string path) : name_(name), path_(path) { }
+	Device(const std::string& name, const std::string& path) : name_(name), path_(path) { }
 	Device(const char * name, const char * path) : name_(name), path_(path) { }
 
 	std::string getName() const {

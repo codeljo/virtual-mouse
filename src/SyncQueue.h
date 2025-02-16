@@ -16,10 +16,10 @@ private:
 public:
 	SyncQueue() { };
 
-	void push(T val) {
+	void push(const T& item) {
 		{
 			std::lock_guard<std::mutex> guard(mutex);
-			queue.push(val);
+			queue.push(item);
 		}
 		cv.notify_one();
 	}
