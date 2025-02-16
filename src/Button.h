@@ -19,11 +19,11 @@ public:
 	uint16_t getKey() const {
 		return key_;
 	}
-	
+
 	State getState() const {
 		return state_;
 	}
-	
+
 	void setState(State state) {
 		state_ = state;
 		switch (state) {
@@ -38,7 +38,7 @@ public:
 		}
 		//std::cout << *this;
 	}
-	
+
 	/* return ms between last 2 button states */
 	int64_t getTimeDiffMs(State state) const {
 		int64_t ms = 0;
@@ -52,22 +52,22 @@ public:
 		}
 		return ms;
 	}
-	
+
 	int64_t time_diff_ms(const struct timespec& start, const struct timespec& end) const {
-    	int64_t seconds = end.tv_sec - start.tv_sec;
-    	int64_t nanoseconds = end.tv_nsec - start.tv_nsec;
-    	if (nanoseconds < 0) {
-    	    seconds--;
-    	    nanoseconds += 1000000000;
-    	}
-    	return (seconds * 1000) + (nanoseconds / 1000000);
+		int64_t seconds = end.tv_sec - start.tv_sec;
+		int64_t nanoseconds = end.tv_nsec - start.tv_nsec;
+		if (nanoseconds < 0) {
+			seconds--;
+			nanoseconds += 1000000000;
+		}
+		return (seconds * 1000) + (nanoseconds / 1000000);
 	}
-	
+
 	friend std::ostream& operator<<(std::ostream& os, const Button& obj) {
-        os << "Button key:" << obj.key_ << " state:" << int(obj.state_) << " ms:" << obj.getTimeDiffMs(Button::State::UP) << "\n";
-        return os;
+		os << "Button key:" << obj.key_ << " state:" << int(obj.state_) << " ms:" << obj.getTimeDiffMs(Button::State::UP) << "\n";
+		return os;
 	}
-	
+
 };
 
 #endif  /* BUTTON_H */
