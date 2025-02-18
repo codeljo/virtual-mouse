@@ -17,9 +17,9 @@ MouseHandler::~MouseHandler() {
 }
 
 int MouseHandler::fd_open() {
-	fd_ = open(mouse_.getPathPtr(), O_RDWR);
+	fd_ = open(mouse_.getPath().c_str(), O_RDWR);
 	if (fd_ == -1) {
-		DEBUG("MouseHandler %s - failed to open device: %s (%s)\n", __func__, mouse_.getPathPtr(), strerror(errno));
+		DEBUG("MouseHandler %s - failed to open device: %s (%s)\n", __func__, mouse_.getPath().c_str(), strerror(errno));
 	}
 	return fd_;
 }
@@ -34,7 +34,7 @@ int MouseHandler::run() {
 
 	if (fd_open() == -1) { return -1; }
 
-	DEBUG("MouseHandler %s - reading from: %s (%s)\n", __func__, mouse_.getPathPtr(), mouse_.getNamePtr());
+	DEBUG("MouseHandler %s - reading from: %s (%s)\n", __func__, mouse_.getPath().c_str(), mouse_.getName().c_str());
 
 	while (isStopRequested_ == false) {
 

@@ -19,9 +19,9 @@ RemoteHandler::~RemoteHandler() {
 }
 
 int RemoteHandler::fd_open() {
-	fd_ = open(remote_.getPathPtr(), O_RDONLY);
+	fd_ = open(remote_.getPath().c_str(), O_RDONLY);
 	if (fd_ == -1) {
-		DEBUG("RemoteHandler %s - failed to open device: %s (%s)\n", __func__, remote_.getPathPtr(), strerror(errno));
+		DEBUG("RemoteHandler %s - failed to open device: %s (%s)\n", __func__, remote_.getPath().c_str(), strerror(errno));
 	}
 	return fd_;
 }
@@ -37,7 +37,7 @@ int RemoteHandler::run() {
 
 	if (fd_open() == -1) { return -1; }
 
-	DEBUG("RemoteHandler %s - reading from: %s (%s)\n", __func__, remote_.getPathPtr(), remote_.getNamePtr());
+	DEBUG("RemoteHandler %s - reading from: %s (%s)\n", __func__, remote_.getPath().c_str(), remote_.getName().c_str());
 
 	bool isMouse = false;
 

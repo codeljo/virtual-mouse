@@ -20,14 +20,6 @@ public:
 		return path_;
 	}
 
-	const char* getNamePtr() const {
-		return name_.c_str();
-	}
-
-	const char* getPathPtr() const {
-		return path_.c_str();
-	}
-
 	bool equals(const Device& other) const {
 		return path_ == other.path_;
 	}
