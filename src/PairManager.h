@@ -19,6 +19,7 @@ public:
 
 	void add(PairHolder * holder) {
 		holders.push_back(std::unique_ptr<PairHolder>(holder));
+		//std::cout << "connect - " << *holder;
 	}
 
 	bool exists(const Device& remote) {
@@ -34,6 +35,7 @@ public:
 			if (holder->getStatus() == PairHolder::Status::STOPPING) { holder->stop(); }
 		}
 		std::erase_if(holders, [](std::unique_ptr<PairHolder>& ph){ return ph->getStatus() == PairHolder::Status::STOPPED; });
+		//std::erase_if(holders, [](std::unique_ptr<PairHolder>& ph){ if (ph->getStatus() == PairHolder::Status::STOPPED) { std::cout << "disconnect - " << *ph; } return ph->getStatus() == PairHolder::Status::STOPPED; });
 	}
 
 	void loop() {

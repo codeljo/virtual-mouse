@@ -7,7 +7,7 @@
 #include <thread>
 #include <queue>
 
-template <typename T>
+template <class T>
 class SyncQueue {
 private:
 	std::queue<T> queue;
