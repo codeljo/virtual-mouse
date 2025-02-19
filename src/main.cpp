@@ -17,9 +17,9 @@ int main () {
 	return 0;
 }
 
-/*
-g++ -std=c++20 -Wall -Wextra -Wshadow *.cpp -o main
-sudo ./main
-
-//(new PairManager())->loop();
-*/
+//
+// g++ -std=c++20 -Wall -Wextra -Wshadow src/*.cpp -o build/virtual-mouse
+// sudo build/virtual-mouse
+//
+// (new PairManager())->loop();
+//
