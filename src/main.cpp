@@ -1,11 +1,13 @@
 #include <iostream>
 #include "MouseVirtual.h"
 #include "PairManager.h"
-#include "signals.h"
+#include "SignalHandler.h"
 
 int main () {
 
-	signal_handler_init();
+	SignalHandler handler({SIGHUP}, +[](int signum) {
+		std::cout << "signal received:" << signum << "\n";
+	});
 	
 	MouseVirtual mouse;
 
@@ -16,11 +18,8 @@ int main () {
 }
 
 /*
-g++ -std=c++20 -Wall -Wextra -Wshadow *.c *.cpp -o main
+g++ -std=c++20 -Wall -Wextra -Wshadow *.cpp -o main
 sudo ./main
-
-note: -std= (c99, c11, c17, c2x, etc)
-note: -std= (c++11, c++14, c++17, c++20, etc)
 
 //(new PairManager())->loop();
 */
