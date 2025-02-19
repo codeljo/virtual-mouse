@@ -19,7 +19,6 @@ public:
 
 	void add(PairHolder * holder) {
 		holders.push_back(std::unique_ptr<PairHolder>(holder));
-		//std::cout << "connect - " << *holder;
 	}
 
 	bool exists(const Device& remote) {
@@ -28,56 +27,40 @@ public:
 		}
 		return false;
 	}
-	
-	/* remove all PairHolders that are no longer running */
+
 	void cleanup() {
 		for (const auto& holder : holders) {
 			if (holder->getStatus() == PairHolder::Status::STOPPING) { holder->stop(); }
 		}
 		std::erase_if(holders, [](std::unique_ptr<PairHolder>& ph){ return ph->getStatus() == PairHolder::Status::STOPPED; });
-		//std::erase_if(holders, [](std::unique_ptr<PairHolder>& ph){ if (ph->getStatus() == PairHolder::Status::STOPPED) { std::cout << "disconnect - " << *ph; } return ph->getStatus() == PairHolder::Status::STOPPED; });
 	}
 
 	void loop() {
 
 		PollerINotify poll(PollerINotify::create_fd(Devices::PATH_DEV_INPUT), Poller::PollType::READ);
 
+		std::vector<int> remote_keys { KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_ENTER, KEY_KPENTER, KEY_BACK, KEY_HOMEPAGE, KEY_MENU, KEY_REWIND, KEY_PLAYPAUSE, KEY_FASTFORWARD };
+
 		while (true) {
 
-			// show all devices
-			//Devices::showDevices(Devices::DetailType::NAME);
-
-			// mouse
-			std::vector<Device> mouses = Devices::getWithKeysRelsSupported({ BTN_MOUSE }, { REL_X, REL_Y, REL_WHEEL });
-
-			// remote
-			std::vector<int> remote_keys { KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_ENTER, KEY_KPENTER, KEY_BACK, KEY_HOMEPAGE, KEY_MENU, KEY_REWIND, KEY_PLAYPAUSE, KEY_FASTFORWARD };
 			std::vector<Device> remotes = Devices::getWithKeysRelsSupported(remote_keys, {});
-
-			// verify mouse, remote are both found
-			if (mouses.empty() || remotes.empty()) {
+			std::vector<Device> mouses = Devices::getWithKeysRelsSupported({ BTN_MOUSE }, { REL_X, REL_Y, REL_WHEEL });
+			if (remotes.empty() || mouses.empty()) {
 				poll.wait_for(30000);
 				continue;
 			}
-			
-			// mouse
-			Device mouse = mouses.front();
 
-			// cleanup
 			cleanup();
-
-			// add new pair
-			for (auto& remote : remotes)
-			{
-				if (mouse.getPath() == remote.getPath()) { continue; }
+			
+			Device mouse = mouses.front();
+			for (auto& remote : remotes) {
+				if (remote.equals(mouse)) { continue; }
 				if (!exists(remote)) {
 					add(new PairHolder(remote, mouse));
 				}
 			}
 
-			// print details for current pairs
 			print();
-			
 			poll.wait_for(30000);
 		}
 
