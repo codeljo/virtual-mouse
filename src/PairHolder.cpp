@@ -6,7 +6,7 @@
 //#define DEBUG printf
 #define DEBUG(format, args...) ((void)0)
 
-PairHolder::PairHolder(Device& remote, Device& mouse) : remote_(remote), mouse_(mouse), remoteHandler_(remote, queue_), mouseHandler_(mouse, queue_) { 
+PairHolder::PairHolder(const Device& remote, const Device& mouse) : remote_(remote), mouse_(mouse), remoteHandler_(remote, queue_), mouseHandler_(mouse, queue_) { 
     DEBUG("PairHandler() (constructor)\n");
 }
 

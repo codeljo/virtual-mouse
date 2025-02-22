@@ -18,7 +18,7 @@
 
 class RemoteHandler : public ThreadedObject<int> {
 public:
-    RemoteHandler(Device& remote, SyncQueue<Button>& queue);
+    RemoteHandler(const Device& remote, SyncQueue<Button>& queue);
     ~RemoteHandler();
 private:
     int run() override;

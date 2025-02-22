@@ -20,7 +20,7 @@ class PairHolder {
 public:
     enum class Status { RUN, STOPPING, STOPPED };
 public:
-    PairHolder(Device& remote, Device& mouse);
+    PairHolder(const Device& remote, const Device& mouse);
     ~PairHolder();
     void stop();
     Status getStatus() const;

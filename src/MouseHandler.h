@@ -18,7 +18,7 @@
 
 class MouseHandler : public ThreadedObject<int> {
 public:
-    MouseHandler(Device& mouse, SyncQueue<Button>& queue);
+    MouseHandler(const Device& mouse, SyncQueue<Button>& queue);
     ~MouseHandler();
 private:
     enum class KeyEventType { DOWN, UP, DOWNUP };

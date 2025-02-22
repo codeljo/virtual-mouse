@@ -6,7 +6,7 @@
 //#define DEBUG printf
 #define DEBUG(format, args...) ((void)0)
 
-MouseHandler::MouseHandler(Device& mouse, SyncQueue<Button>& queue) : mouse_(mouse), queue_(queue) { 
+MouseHandler::MouseHandler(const Device& mouse, SyncQueue<Button>& queue) : mouse_(mouse), queue_(queue) { 
     DEBUG("MouseHandler() (constructor)\n");
     start();
 }

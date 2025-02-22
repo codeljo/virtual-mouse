@@ -55,7 +55,7 @@ public:
             cleanup();
 
             Device mouse = mouses.front();
-            for (auto& remote : remotes) {
+            for (const auto& remote : remotes) {
                 if (remote.equals(mouse)) { continue; }
                 if (!exists(remote)) {
                     add(new PairHolder(remote, mouse));

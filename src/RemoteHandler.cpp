@@ -8,7 +8,7 @@
 //#define DEBUG printf
 #define DEBUG(format, args...) ((void)0)
 
-RemoteHandler::RemoteHandler(Device& remote, SyncQueue<Button>& queue) : remote_(remote), queue_(queue) {
+RemoteHandler::RemoteHandler(const Device& remote, SyncQueue<Button>& queue) : remote_(remote), queue_(queue) {
     DEBUG("RemoteHandler() (constructor)\n");
     start();
 }
