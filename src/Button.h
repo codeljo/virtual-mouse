@@ -36,7 +36,6 @@ public:
                 clock_gettime(CLOCK_REALTIME, &times_down[1]);
                 break;
         }
-        //std::cout << *this;
     }
 
     /* return ms between last 2 button states */
