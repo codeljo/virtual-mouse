@@ -5,16 +5,16 @@
 
 int main () {
 
-	SignalHandler handler({SIGHUP}, +[](int signum) {
-		std::cout << "signal received:" << signum << "\n";
-	});
-	
-	MouseVirtual mouse;
+    SignalHandler handler({SIGHUP}, +[](int signum) {
+        std::cout << "signal received:" << signum << "\n";
+    });
+    
+    MouseVirtual mouse;
 
-	PairManager manager;
-	manager.loop();
+    PairManager manager;
+    manager.loop();
 
-	return 0;
+    return 0;
 }
 
 //

@@ -18,21 +18,21 @@
 
 class PairHolder {
 public:
-	enum class Status { RUN, STOPPING, STOPPED };
+    enum class Status { RUN, STOPPING, STOPPED };
 public:
-	PairHolder(Device& remote, Device& mouse);
-	~PairHolder();
-	void stop();
-	Status getStatus() const;
-	Device getRemote();
-	Device getMouse();
-	friend std::ostream& operator<<(std::ostream& os, const PairHolder& obj);
+    PairHolder(Device& remote, Device& mouse);
+    ~PairHolder();
+    void stop();
+    Status getStatus() const;
+    Device getRemote();
+    Device getMouse();
+    friend std::ostream& operator<<(std::ostream& os, const PairHolder& obj);
 private:
-	Device remote_;
-	Device mouse_;
-	RemoteHandler remoteHandler_;
-	MouseHandler mouseHandler_;
-	SyncQueue<Button> queue_;
+    Device remote_;
+    Device mouse_;
+    RemoteHandler remoteHandler_;
+    MouseHandler mouseHandler_;
+    SyncQueue<Button> queue_;
 };
 
 #endif  /* PAIR_HOLDER_H */

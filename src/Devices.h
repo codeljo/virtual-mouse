@@ -15,21 +15,21 @@
 
 class Devices {
 public:
-	Devices() = delete;
-	~Devices() = delete;
-	enum class KeyEventType { DOWN, UP, DOWNUP };
-	enum class SearchType { EXACT, CONTAINS };
-	enum class DetailType { ALL, NAME };
-	static Device getByName(const char* search, SearchType searchType);
-	static std::vector<Device> getByName2(const char* search, SearchType searchType);
-	static std::vector<Device> getWithKeysRelsSupported(const std::vector<int>& keys, const std::vector<int>& rels);
-	static bool showDevice(const char* device, DetailType detailType);
-	static bool showDevices(DetailType detailType);
-	static bool isKeySupported(const char* device, int key);
-	static bool isKeySupported(int fd, int key);
-	static bool isRelSupported(const char* device, int rel);
-	static bool isRelSupported(int fd, int rel);
-	static const inline char* PATH_DEV_INPUT { "/dev/input/" };
+    Devices() = delete;
+    ~Devices() = delete;
+    enum class KeyEventType { DOWN, UP, DOWNUP };
+    enum class SearchType { EXACT, CONTAINS };
+    enum class DetailType { ALL, NAME };
+    static Device getByName(const char* search, SearchType searchType);
+    static std::vector<Device> getByName2(const char* search, SearchType searchType);
+    static std::vector<Device> getWithKeysRelsSupported(const std::vector<int>& keys, const std::vector<int>& rels);
+    static bool showDevice(const char* device, DetailType detailType);
+    static bool showDevices(DetailType detailType);
+    static bool isKeySupported(const char* device, int key);
+    static bool isKeySupported(int fd, int key);
+    static bool isRelSupported(const char* device, int rel);
+    static bool isRelSupported(int fd, int rel);
+    static const inline char* PATH_DEV_INPUT { "/dev/input/" };
 };
 
 #endif  /* DEVICES_H */

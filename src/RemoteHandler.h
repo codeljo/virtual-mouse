@@ -18,17 +18,17 @@
 
 class RemoteHandler : public ThreadedObject<int> {
 public:
-	RemoteHandler(Device& remote, SyncQueue<Button>& queue);
-	~RemoteHandler();
+    RemoteHandler(Device& remote, SyncQueue<Button>& queue);
+    ~RemoteHandler();
 private:
-	int run() override;
-	int fd_open();
-	void fd_close();
+    int run() override;
+    int fd_open();
+    void fd_close();
 private:
-	Device remote_;
-	SyncQueue<Button>& queue_;
-	int fd_ {-1};
-	static constexpr int READ_EVENTS_MAX = 64;
+    Device remote_;
+    SyncQueue<Button>& queue_;
+    int fd_ {-1};
+    static constexpr int READ_EVENTS_MAX = 64;
 };
 
 #endif  /* REMOTE_HANDLER_H */
