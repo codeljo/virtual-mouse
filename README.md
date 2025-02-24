@@ -3,6 +3,10 @@
 
 <br>
 
+![C/C++ CI](https://github.com/codeljo/virtual-mouse/actions/workflows/cpp-make.yml/badge.svg)
+
+<br>
+
 ## Usage
 Function     | Key / Button
 -------------|------------------------------
