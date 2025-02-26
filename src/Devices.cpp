@@ -577,18 +577,6 @@ bool Devices::showDevice(const char* device, DetailType detailType) {
 }
 
 /* get supported keys */
-bool Devices::isKeySupported(const char* device, int key) {
-    int fd = open(device, O_RDONLY);
-    if (fd == -1) {
-        DEBUG("%s - failed to open device: %s (%s)\n", __func__, device, strerror(errno));
-        return false;
-    }
-    bool r = isKeySupported(fd, key);
-    close(fd);
-    return r;
-}
-
-/* get supported keys */
 bool Devices::isKeySupported(int fd, int key) {
 
     unsigned char keys[(KEY_MAX / 8) + 1];
@@ -601,18 +589,6 @@ bool Devices::isKeySupported(int fd, int key) {
         return false;
     }
     return (keys[key/8] & (1 << (key % 8)));
-}
-
-/* get supported relative axes */
-bool Devices::isRelSupported(const char* device, int rel) {
-    int fd = open(device, O_RDONLY);
-    if (fd == -1) {
-        DEBUG("%s - failed to open device: %s (%s)\n", __func__, device, strerror(errno));
-        return false;
-    }
-    bool r = isRelSupported(fd, rel);
-    close(fd);
-    return r;
 }
 
 /* get supported relative axes */
